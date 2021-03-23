@@ -62,6 +62,15 @@ const createProductForm = (categories) => {
             widget: widgets.select(),
             // choices: [[1, "Fruits"], [2, "Grains"]]
             choices:categories
+        }),
+        'tags': fields.string({
+            required:true,
+            errorAfterField: true,
+            cssClass: {
+                label: ['form-label']
+            },
+            widget:widgets.multipleSelect(),
+            choices:tags
         })
     })
 }

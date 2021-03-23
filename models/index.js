@@ -19,9 +19,19 @@ const Category = bookshelf.model('Category', {
     // involved in the relationship, but lowercase and in plural
     products() {
         return this.hasMany('Product')
+    },
+    tags(){
+        return this.belongsToMany('Tag')
+    }
+})
+
+const Tag = bookshelf.model('Tag', {
+    tableName:'tags',
+    products(){
+        return this.belongsToMany('Product')
     }
 })
 
 module.exports = {
-    Product, Category
+    Product, Category,Tag
 }

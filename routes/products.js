@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // import in the Product model 
-const { Product, Category } = require('../models')
+const { Product, Category, Tag } = require('../models')
 const { createProductForm, bootStrapField } = require('../forms')
 
 
@@ -22,10 +22,13 @@ router.get('/', async (req, res) => {
 })
 
 
-router.get('/create', (req, res) => {
+router.get('/create', async(req, res) => {
     const allCategories = Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
+
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
+
     const productForm = createProductForm(allCategories);
     res.render('products/create', {
         'form': productForm.toHTML(bootStrapField)
@@ -37,14 +40,20 @@ router.post('/create', (req, res) => {
     const productForm = createProductForm();
     productForm.handle(req, {
         'success': async (form) => {
+            let {tags, ...productData} = form.data
             //use Product model to save
             // a new instance of Product 
             const newProduct = new Product()
-            newProduct.set('name', form.data.name)
-            newProduct.set('cost', form.data.cost)
-            newProduct.set('description', form.data.description)
-            newProduct.set('category_id', form.data.category_id)
+            newProduct.set(productData)
+            // newProduct.set('name', form.data.name)
+            // newProduct.set('cost', form.data.cost)
+            // newProduct.set('description', form.data.description)
+            // newProduct.set('category_id', form.data.category_id)
             await newProduct.save();
+
+            if (tags) {
+                await newProduct.tags().attach(tags.split(','))
+            }
             res.redirect('/products')
         },
         'error': (form) => {
@@ -89,11 +98,12 @@ router.post('/:product_id/update', async (req, res) => {
     const productToEdit = await Product.where({
         'id': req.params.product_id
     }).fetch({
-        required: true
+        required: true,
+        
     });
 
     const productForm = createProductForm()
-
+    const selectedTagIds = productJSON.tags.map( t => t.id)
     productForm.handle(req, {
         'success': async (form) => {
             // below line works if we follow the database column names
