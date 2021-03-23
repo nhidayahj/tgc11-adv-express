@@ -59,7 +59,7 @@ const createProductForm = (categories) => {
             cssClass: {
                 label: ['form-label']
             },
-            widgets:widgets.select(),
+            widget: widgets.select(),
             // choices: [[1, "Fruits"], [2, "Grains"]]
             choices:categories
         })

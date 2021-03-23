@@ -15,7 +15,8 @@ const Product = bookshelf.model('Product', {
 
 const Category = bookshelf.model('Category', {
     tableName:'categories',
-    // name of the 
+     // the name of the function must match the name of the model
+    // involved in the relationship, but lowercase and in plural
     products() {
         return this.hasMany('Product')
     }

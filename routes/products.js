@@ -23,10 +23,10 @@ router.get('/', async (req, res) => {
 
 
 router.get('/create', (req, res) => {
-    const allCategory = Category.fetchAll().map((category) => {
+    const allCategories = Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
-    const productForm = createProductForm(allCategory);
+    const productForm = createProductForm(allCategories);
     res.render('products/create', {
         'form': productForm.toHTML(bootStrapField)
     })
@@ -56,6 +56,9 @@ router.post('/create', (req, res) => {
 })
 
 router.get('/:product_id/update', async (req, res) => {
+    const allCategories = Category.fetchAll().map((category) => {
+        return [category.get('id'), category.get('name')]
+    })
     // 1. get the product we want to update
     // select * from products where id = ${product_id}
     const productToEdit = await Product.where({
@@ -66,10 +69,12 @@ router.get('/:product_id/update', async (req, res) => {
 
     // 2. send the product to the view
     // manual way of updating
-    const form = createProductForm();
+    const form = createProductForm(allCategories);
     form.fields.name.value = productToEdit.get('name')
     form.fields.cost.value = productToEdit.get('cost')
     form.fields.description.value = productToEdit.get('description')
+
+    form.fields.category_id.value = productToEdit.get('category_id')
 
     res.render('products/update', {
         'form': form.toHTML(bootStrapField),

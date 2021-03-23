@@ -1,10 +1,10 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<h2>Update product</h2>
+<h2>Update product: {{product.name}}</h2>
 <form method="POST">
     {{{form}}}
-        <input type="submit" class="btn btn primary" value="Update Product"/>
+        <input type="submit" class="btn btn-primary" value="Update Product"/>
 </form>
 {{/block}}
 
