@@ -100,4 +100,30 @@ router.post('/:product_id/update', async (req, res) => {
 
 })
 
+router.get('/:product_id/delete', async(req,res) => {
+    // 1. get the product we want to update
+    // select * from products where id = ${product_id}
+    const productToDelete = await Product.where({
+        'id': req.params.product_id
+    }).fetch({
+        required: true
+    });
+
+    res.render('products/delete', {
+        'product':productToDelete.toJSON()
+    })
+})
+
+router.post('/:product_id/delete', async(req,res) => {
+    const productToDelete = await Product.where({
+        'id': req.params.product_id
+    }).fetch({
+        required: true
+    });
+
+    res.render('products/delete', {
+        'product':productToDelete.toHTML()
+    })
+})
+
 module.exports = router
