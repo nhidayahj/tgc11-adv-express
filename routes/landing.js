@@ -4,14 +4,14 @@ const express = require('express')
 const router = express.Router();
 
 router.get('/', (req,res) => {
-    res.send('Welcome!')
+    res.render('landing/welcome')
 })
 
 router.get('/about', (req, res) => {
-    res.send("About Us")
+    res.render("About Us")
 })
 
 router.get('/contact-us', (req,res) => {
-    res.send('Contact us')
+    res.render('Contact us')
 })
 module.exports = router;

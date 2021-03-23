@@ -43,3 +43,29 @@ We continually tweak and adjust this template to help give you the best experien
 --------
 
 Happy coding!
+
+
+### Dependencies added 
+- yarn add express
+- yarn add hbs
+- yarn add wax-on
+- yarn add dotenv
+- yarn add db-migrate
+- yarn add knex
+- yarn add bookshelf (JS ORM)
+- yarn add forms 
+
+**nodejs form helper**
+- caolan forms used in this lesson
+
+#### In JS:
+yarn: called the dependency manager
+
+#### In Python:
+-pip 
+
+
+#### PNP 
+- composer 
+
+In actual production, DO NOT use a root user 

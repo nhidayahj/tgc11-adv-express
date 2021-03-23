@@ -26,11 +26,14 @@ app.use(
 // import in the routes
 const landingRoutes = require('./routes/landing')
 const corporateRoutes = require('./routes/corporate')
+const productsRoutes = require('./routes/products')
 
 async function main() {
     // if url begins exactly wiht '/' use the landingRoutes
   app.use('/', landingRoutes)
   app.use('/investors', corporateRoutes)
+  app.use('/products', productsRoutes)
+
 }
 
 main();
