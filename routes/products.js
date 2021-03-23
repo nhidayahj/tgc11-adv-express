@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // import in the Product model 
-const { Product } = require('../models')
+const { Product, Category } = require('../models')
 const { createProductForm, bootStrapField } = require('../forms')
 
 
@@ -13,7 +13,9 @@ router.get('/', async (req, res) => {
     // 
 
 
-    let products = await Product.collection().fetch()
+    let products = await Product.collection().fetch({
+        withRelated:['category']
+    })
     res.render('products/index', {
         'products': products.toJSON()
     })
@@ -21,7 +23,10 @@ router.get('/', async (req, res) => {
 
 
 router.get('/create', (req, res) => {
-    const productForm = createProductForm();
+    const allCategory = Category.fetchAll().map((category) => {
+        return [category.get('id'), category.get('name')]
+    })
+    const productForm = createProductForm(allCategory);
     res.render('products/create', {
         'form': productForm.toHTML(bootStrapField)
     })
@@ -38,6 +43,7 @@ router.post('/create', (req, res) => {
             newProduct.set('name', form.data.name)
             newProduct.set('cost', form.data.cost)
             newProduct.set('description', form.data.description)
+            newProduct.set('category_id', form.data.category_id)
             await newProduct.save();
             res.redirect('/products')
         },

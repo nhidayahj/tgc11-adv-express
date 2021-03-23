@@ -2,6 +2,7 @@ const forms = require('forms')
 
 const fields = forms.fields;
 const validators = forms.validators;
+const widgets = forms.widgets;
 
 var bootstrapField = function (name, object) {
     if (!Array.isArray(object.widget.classes)) { object.widget.classes = []; }
@@ -25,7 +26,8 @@ var bootstrapField = function (name, object) {
 
 
 // create a form funciton
-const createProductForm = () => {
+// categories shld be an array of possible options
+const createProductForm = (categories) => {
     return forms.create({
         'name': fields.string({
             required: true,
@@ -49,6 +51,17 @@ const createProductForm = () => {
             cssClass: {
                 label: ['form-label']
             }
+        }),
+        'category_id': fields.string({
+            label: 'Category',
+            required:true,
+            errorAfterField: true,
+            cssClass: {
+                label: ['form-label']
+            },
+            widgets:widgets.select(),
+            // choices: [[1, "Fruits"], [2, "Grains"]]
+            choices:categories
         })
     })
 }

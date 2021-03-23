@@ -12,6 +12,9 @@
                 Name
             </th>
             <th>
+                Index
+            </th>
+            <th>
                 Cost
             </th>
             <th>
@@ -26,10 +29,11 @@
         {{#each products}}
         <tr>
             <td>{{this.name}}</td>
+            <td>{{this.category.name}}</td>
             <td>{{this.cost}}</td>
             <td>{{this.description}}</td>
-            <td><a href="/products/"+{{this.product_id}}+"/update">Update</a></td>
-            <td><a href="/products/"+{{this.product_id}}+"/delete">Delete</a></td>
+            <td><a href="/products/{{this.id}}/update">Update</a></td>
+            <td><a href="/products/{{this.id}}/delete">Delete</a></td>
         </tr>
         {{/each}}
     </tbody>
