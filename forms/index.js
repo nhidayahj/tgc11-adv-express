@@ -75,4 +75,30 @@ const createProductForm = (categories) => {
     })
 }
 
-module.exports = {createProductForm, bootstrapField}
+const createUserForm = () => {
+    return forms.create({
+        'username':fields.string({
+            required:true,
+            errorAfterField:true,
+            cssClass:{
+                label:['form-label']
+            }
+        }),
+        C,
+        'confirm_password':fields.password({
+            required:true,
+            errorAfterField:true,
+            cssClass:{
+                label:['form-label']
+            },
+            validators:[validators.matchField('password')]
+        })
+
+    })
+}
+
+// const createLoginForm = () => {
+     
+// }
+
+module.exports = {createProductForm, bootstrapField, createUserForm}

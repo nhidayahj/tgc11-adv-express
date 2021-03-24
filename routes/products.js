@@ -54,11 +54,15 @@ router.post('/create', (req, res) => {
             if (tags) {
                 await newProduct.tags().attach(tags.split(','))
             }
+            // below display success message
+            // .. add to flash messages -- which is stored in the session
+            req.flash('success_messages', `New Product ${product.get('name')} has been created`)
             res.redirect('/products')
         },
         'error': (form) => {
+            res.flash('error_messages', "Please corret all errors and try again")
             res.render('products/create', {
-                'form': form.toHTML(bootStrapField)
+                'form': form.toHTML(bootStrapField).attach(tags.split(','))
             })
         }
     })
@@ -82,8 +86,8 @@ router.get('/:product_id/update', async (req, res) => {
     form.fields.name.value = productToEdit.get('name')
     form.fields.cost.value = productToEdit.get('cost')
     form.fields.description.value = productToEdit.get('description')
-
     form.fields.category_id.value = productToEdit.get('category_id')
+
 
     res.render('products/update', {
         'form': form.toHTML(bootStrapField),

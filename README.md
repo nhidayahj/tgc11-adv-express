@@ -54,6 +54,8 @@ Happy coding!
 - yarn add knex
 - yarn add bookshelf (JS ORM)
 - yarn add forms 
+- yarn add express-session
+- yarn add connect-flash
 
 **nodejs form helper**
 - caolan forms used in this lesson
