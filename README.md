@@ -90,7 +90,7 @@ Add a *'start' script* to ***package.json file***
  }
  ```
  
-5. In index.js, change the current port number in app.listen from 3000 to process.env.PORT
+5. In index.js, change the current port number in app.listen from 3000 to ***process.env.PORT***
 
 *Save all files and Push all the changes made to Heroku*
 
@@ -185,6 +185,14 @@ git commit -m <commit messages>
 git push
 ```
 
+13.ii After deployment, if there are any changes to be made:
+```
+1. Ensure GitHub repo & Heroku are aligned. 
+2. Push to GitHub (usual commands)
+3. Login to heroku first (In terminal: heroku login -i)
+4. After entering Heroku credentials
+5. In terminal: git push heroku master
+```
 14. Since our Postgres is empty, download a community version of [DBeaver](https://dbeaver.io/) and install in computer.
 
 After downloading and launching DB-Beaver.
